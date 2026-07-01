@@ -1,0 +1,5 @@
+interface:
+  display_name: "组学富集分析"
+  short_description: "用于 GO、KEGG、ORA 和 GSEA 的模块 skill。"
+  default_prompt: "在输入特征列表、ID 类型和背景集规则已经明确后，使用这个模块做富集分析。"
+

@@ -1,0 +1,5 @@
+interface:
+  display_name: "组学差异分析"
+  short_description: "用于 DEG、DEP、DEM 风格比较的模块 skill。"
+  default_prompt: "在 assay 类型、矩阵状态、metadata 和 contrast 已明确后，使用这个模块做差异分析，并记录所有阈值。"
+

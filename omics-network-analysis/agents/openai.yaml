@@ -1,0 +1,4 @@
+interface:
+  display_name: "组学网络分析"
+  short_description: "用于 WGCNA 风格网络分析的模块 skill。"
+  default_prompt: "在 trait 表和矩阵适用性已经明确后，使用这个模块做网络分析。"

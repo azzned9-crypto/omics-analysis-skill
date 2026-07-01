@@ -1,0 +1,5 @@
+interface:
+  display_name: "组学时序分析"
+  short_description: "用于 Mfuzz 等有序时间序列分析的模块 skill。"
+  default_prompt: "在时间顺序和重复结构已经明确后，使用这个模块做组学时序分析。"
+
