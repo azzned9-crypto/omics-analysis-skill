@@ -36,3 +36,4 @@ The goal is to constrain AI analysis behavior by forcing:
 - Skill folder names remain in English for portability.
 - Skill bodies and configuration content are written in Chinese.
 
+<img width="1159" height="1358" alt="omics-downstream-analysis-structure-comic" src="https://github.com/user-attachments/assets/5983a436-8cbe-4d5b-9507-1ae153742850" />
