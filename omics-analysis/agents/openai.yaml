@@ -1,0 +1,5 @@
+interface:
+  display_name: "组学分析"
+  short_description: "面向 clean matrix 的组学分析总入口 skill。"
+  default_prompt: "使用这个 skill 规划或执行 clean matrix 的组学分析。先确认组学类型、矩阵状态、contrast、batch、阈值策略和要调用的模块，再进入具体方法。"
+

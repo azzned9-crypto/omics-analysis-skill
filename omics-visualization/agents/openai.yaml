@@ -1,0 +1,4 @@
+interface:
+  display_name: "组学可视化"
+  short_description: "用于统一输出火山图、热图、富集图、趋势图和网络图。"
+  default_prompt: "使用这个模块为组学分析结果生成标准化可视化，并记录图所对应的数据层级、阈值和分析步骤。"

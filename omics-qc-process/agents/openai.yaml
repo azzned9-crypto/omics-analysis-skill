@@ -1,0 +1,4 @@
+﻿interface:
+  display_name: "组学 QC 分析模块"
+  short_description: "用于按组学类型执行或组织 QC 流程，并判断是否允许进入后续分析。"
+  default_prompt: "使用这个模块对当前组学数据执行或组织 QC 流程。先确认 assay 类型、matrix 状态、metadata、batch 和缺失值处理，再给出是否允许进入后续分析的结论。"
