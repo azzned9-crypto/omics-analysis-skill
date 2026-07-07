@@ -9,6 +9,7 @@
 模块：
 
 - `omics-qc-process`
+- `omics-scrna-process`
 - `omics-differential-analysis`
 - `omics-enrichment-analysis`
 - `omics-time-series-analysis`
@@ -55,6 +56,24 @@
 
 -> `omics-visualization`
 
+### 例 4：单细胞 RNA-seq 分析
+
+`omics-analysis`
+
+-> `omics-qc-process`（scRNA QC：细胞过滤 + DoubletFinder）
+
+-> `omics-scrna-process`（整合 → 聚类 → 注释 → 差异分析 → 高级分析）
+
+-> `omics-visualization`
+
+### 例 5：单细胞 QC 复核（已有 clean data）
+
+`omics-analysis`
+
+-> `omics-qc-process`（仅做放行复核）
+
+-> `omics-scrna-process`
+
 ## 何时可直接调用模块
 
 仅当以下信息已经非常明确时，才适合直接调用模块：
@@ -66,4 +85,3 @@
 - 输入对象
 
 否则优先回到主体。
-
