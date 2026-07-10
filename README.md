@@ -1,104 +1,123 @@
 # omics-analysis-skill
 
-Cross-omics analysis skill set for QC, downstream analysis, and visualization.
+Cross-omics Codex skill set for QC, downstream analysis, single-cell workflows, and HXF-style scientific visualization.
 
 ![omics-analysis-skill architecture](assets/omics-skill-comic.jpg)
+
+## What This Skill Set Does
+
+`omics-analysis-skill` is organized as a router plus focused modules. The main entry skill keeps the analysis from guessing assay type, matrix state, contrast, batch design, thresholds, or output requirements too early. The module skills then handle the specific task.
+
+Use `omics-analysis` when the task is broad or under-specified. Use a module directly only when the assay, input object, contrast or trait, matrix state, and expected output are already clear.
 
 ## Included Skills
 
 - `omics-analysis`
   Main entry skill for task intake, mandatory questioning, module dispatch, and audit-aware routing.
 - `omics-qc-process`
-  QC module with workflow-based rules for proteomics, bulk RNA-seq, metabolomics and single-cell RNA-seq, including risk-sample reporting and special-condition branching.
+  QC module with workflow rules for proteomics, bulk RNA-seq, metabolomics, and single-cell RNA-seq, including risk-sample reporting and special-condition branching.
 - `omics-scrna-process`
-  **New (2026-07-07).** Single-cell RNA-seq downstream analysis module: multi-sample integration, clustering, cell-type annotation, differential expression, trajectory (Monocle3 / CellRank2), cell-cell communication (CellChat) and stemness prediction (CytoTRACE2).
+  Single-cell RNA-seq downstream module for multi-sample integration, clustering, cell-type annotation, DEG analysis, trajectory analysis, cell-cell communication, and stemness prediction.
 - `omics-differential-analysis`
-  Differential analysis module for DEG, DEP, and DEM style tasks.
+  Differential analysis module for DEG, DEP, and DEM-style tasks.
 - `omics-enrichment-analysis`
   Enrichment analysis module for GO, KEGG, ORA, and GSEA.
 - `omics-time-series-analysis`
-  Time-series module for Mfuzz-style workflows.
+  Time-series module for ordered time-point and Mfuzz-style workflows.
 - `omics-network-analysis`
-  Network module for WGCNA-style workflows.
+  Network module for WGCNA-style co-expression or co-abundance workflows.
 - `omics-visualization`
-  Visualization module for volcano plots, heatmaps, enrichment plots, trend plots, and network figures.
+  HXF-style visualization module for omics results, clinical phenotype associations, model results, figure revision, and reproducible R plotting.
 
-## 2026-07-07 Updates (scRNA release)
+## Install
 
-- Added `omics-scrna-process` — a new downstream module for single-cell RNA-seq.
-  - `SKILL.md`: mandatory questioning on tissue type, species, expected markers, integration method, clustering resolution, annotation strategy, trajectory / communication / stemness options.
-  - `workflow.md`: 10-step downstream flow (merge → Harmony integration → multi-resolution clustering → marker identification → annotation → DEG → Monocle3 / CellRank2 → CellChat → CytoTRACE2 → save).
-  - `references.md`: 12 key references (Seurat, Harmony, Scanpy, SingleR, CellTypist, Azimuth, Monocle3, CellRank2, CellChat, CytoTRACE2, Luecken & Theis).
-- Extended `omics-qc-process` with a single-cell RNA-seq QC branch.
-  - `references/workflow-scrna.md`: 11-section QC workflow covering 10X Genomics and MGI DNBelab C4 platforms (Read10X vs ReadPISA), cell filtering, and DoubletFinder.
-  - `references/references-scrna.md`: 10 key references (Seurat, DoubletFinder, Scanpy, Harmony, Luecken & Theis, SCTransform, EmptyDrops, DNBC4tools, 10X).
-  - `SKILL.md`: added `scrna` as a 4th QC branch and mandatory data-source-platform confirmation (10X vs MGI C4).
-- Registered single-cell RNA-seq in the main entry `omics-analysis`.
-  - Module list now includes `omics-scrna-process`.
-  - New assay profile `references/profiles/scrna.md` (matrix states, special-condition questions, defaults, common risks).
-  - Added scRNA-specific 必问项 (platform, tissue type, expected markers, species) and special-condition branches (snRNA-seq, tissue-specific QC).
+Install all skills from this repository with:
 
-## 2026-07-03 Updates
+```bash
+python <CODEX_HOME>/skills/.system/skill-installer/scripts/install-skill-from-github.py --repo azzned9-crypto/omics-analysis-skill --path omics-analysis omics-qc-process omics-scrna-process omics-differential-analysis omics-enrichment-analysis omics-time-series-analysis omics-network-analysis omics-visualization
+```
 
-- Renamed the main workflow concept to `omics-analysis` and removed the old `omics-downstream-analysis` copy from the repository.
-- Shrunk `omics-qc-process/SKILL.md` into an entry-rule document and moved detailed procedures into workflow files.
-- Added `workflow-proteomics.md` and `workflow-bulk-rnaseq.md` under `omics-qc-process/references/`.
-- Added explicit risk-sample policy: default is mark and report, not auto-remove.
-- Added unified risk levels in `SKILL.md`:
-  - `低风险`: no QC step abnormal
-  - `中风险`: one QC step abnormal
-  - `高风险`: two or more QC steps abnormal
-- Added HTML and audit presentation rules for risk samples.
-- Added proteomics-specific QC branches for sample type and platform:
-  - plasma
-  - serum
-  - urine
-  - CSF
-  - saliva and other body fluids
-  - DIA, DDA, TMT, label-free
-- Added bulk RNA-seq-specific QC branches for library strategy and sample context:
-  - polyA
-  - ribo-depletion / total RNA
-  - stranded / unstranded
-  - 3 prime / capture
-  - whole transcriptome
-  - FFPE
-  - blood RNA
-  - low-input and degraded RNA
-- Added independent reference files:
-  - `references-proteomics.md`
-  - `references-bulk-rna.md`
-- Updated the main `omics-analysis` entry skill so the first round must confirm:
-  - assay type
-  - sample type
-  - platform or library strategy
-  - matrix state
-  - contrast
-  - batch
-  - whether a special-condition branch is triggered
+Restart Codex after installation so the new or updated skills are indexed.
 
-## Design
+## Current Update
 
-This repository separates:
+This release keeps the existing scRNA/QC-capable `omics-analysis` router intact and expands `omics-visualization` into a full HXF-style plotting module.
 
-- main workflow entry
-- QC workflow control
-- method modules
-- visualization
-- assay-specific and workflow-specific references
+Compared with the previous GitHub version:
 
-The goal is to constrain AI analysis behavior by forcing:
+- `omics-visualization/SKILL.md` was expanded from a compact visualization checklist into a full plotting workflow.
+- `omics-visualization/agents/openai.yaml` now explicitly routes `$omics-visualization` toward HXF-style R visualization with PDF and PNG export.
+- HXF-vis reference resources were copied into `omics-visualization/references/`.
+- Legacy plotting templates were added under `omics-visualization/references/legacy-code/`.
+- Clinical mock data and data dictionary were added as optional testing resources, not as default omics inputs.
+- A lightweight `omics-analysis/references/omics-visualization.md` reference was added for the main router's visualization handoff.
 
-- assay confirmation
-- sample-type confirmation
-- platform or library-strategy confirmation (incl. scRNA data-source platform)
-- matrix-state confirmation
-- contrast confirmation
-- threshold recording
-- risk-sample reporting
-- audit-aware outputs
+## HXF Visualization Sync
+
+The visualization module now includes rules and resources that previously lived only in HXF-vis:
+
+- unified `theme_bw()` / `x_theme()` plotting style
+- low-saturation palettes for two-group, three-group, multi-class, and differential-direction plots
+- default `viridis` handling for continuous variables
+- centered diverging scales for z-score, correlation, and log2FC-like values
+- volcano, heatmap, enrichment, correlation, PCA/UMAP/tSNE, UpSet, Venn, Sankey, forest, KM, ROC, calibration, and DCA guidance
+- minimum pre-plot questions
+- output requirements for PDF vector files plus PNG previews
+- rules for refactoring legacy R plotting code without inheriting hard-coded paths or unverified statistics
+
+The synced resources are:
+
+```text
+omics-visualization/
+├── assets/
+│   └── mock-clinical-data.csv
+├── references/
+│   ├── visualization-style-guide.md
+│   ├── legacy-code-index.md
+│   ├── mock-data-dictionary.md
+│   └── legacy-code/
+└── scripts/
+    ├── generate_mock_clinical_data.R
+    └── generate_mock_clinical_data.ps1
+```
+
+## Routing Examples
+
+Proteomics differential analysis:
+
+```text
+omics-analysis
+-> omics-qc-process
+-> omics-differential-analysis
+-> omics-visualization
+```
+
+Single-cell RNA-seq:
+
+```text
+omics-analysis
+-> omics-qc-process
+-> omics-scrna-process
+-> omics-visualization
+```
+
+Figure-only revision:
+
+```text
+omics-visualization
+```
+
+## Design Principles
+
+- Confirm assay type, sample type, platform or library strategy before analysis.
+- Record matrix state, contrast, batch handling, thresholds, and module choice.
+- Report risk samples rather than silently removing them.
+- Keep statistical analysis and visualization responsibilities separate.
+- Preserve scientific meaning before changing aesthetics.
+- Use R and reproducible plotting code by default.
 
 ## Notes
 
 - Skill folder names remain in English for portability.
-- Skill bodies and configuration content are written in Chinese.
+- Skill bodies and configuration content are written mainly in Chinese.
+- HXF-vis resources are included to support consistent plotting style, but `omics-visualization` remains an omics-first visualization module.

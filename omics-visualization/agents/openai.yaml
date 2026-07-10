@@ -1,4 +1,4 @@
 interface:
   display_name: "组学可视化"
-  short_description: "用于统一输出火山图、热图、富集图、趋势图和网络图。"
-  default_prompt: "使用这个模块为组学分析结果生成标准化可视化，并记录图所对应的数据层级、阈值和分析步骤。"
+  short_description: "用于按 HXF 规范统一输出组学图、模型图和临床表型关联图。"
+  default_prompt: "使用 $omics-visualization 为组学分析结果、模型结果或临床表型关联结果生成 HXF 风格 R 可视化；必要时读取同步的 style guide 和 legacy-code 索引，并同时导出 PDF 和 PNG。"
